@@ -37,7 +37,7 @@ my &index = &page.assuming( #:REFRESH(15),
         Remembered by <a href="https://fco.github.io/Red/" target="_blank">red</a>.
         Constructed in <a href="https://cro.raku.org" target="_blank">cro</a>.
         &nbsp;&amp;&nbsp;
-        Styled by <a href="https://picocss.com" target="_blank">picocss</a>.
+        Styleed by <a href="https://picocss.com" target="_blank">picocss</a>.
     |),
 );
 
