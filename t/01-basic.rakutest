@@ -1,5 +1,5 @@
 use Test;
-use Cragcli;
+use Slangify;
 
 pass "replace me";
 
