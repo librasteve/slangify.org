@@ -5,3 +5,7 @@ harcstack.org {
 cragcli.info {
     reverse_proxy cragcli-info:3000
 }
+
+slangify.org {
+    reverse_proxy slangify-org:3000
+}

@@ -17,6 +17,15 @@ services:
       - webnet
     restart: unless-stopped
 
+  slangify-org:
+    image: quay.io/librasteve/slangify-org:latest
+    container_name: slangify-org
+    expose:
+      - "3000"
+    networks:
+      - webnet
+    restart: unless-stopped
+
   caddy:
     image: caddy:latest
     container_name: caddy_proxy
@@ -30,6 +39,7 @@ services:
     depends_on:
       - harcstack-org
       - cragcli-info
+      - slangify-org
     networks:
       - webnet
     restart: unless-stopped
