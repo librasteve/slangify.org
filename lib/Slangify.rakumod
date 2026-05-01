@@ -23,8 +23,10 @@ my &index = &page.assuming(
     |),
 );
 
+my @tools = [Analytics.new: :provider(Umami), :key<4464d54a-3dbe-4f79-8d45-1ef4f22cd677>,];
+
 our $site =
-site :register[LightDark.new], :theme-color<blue>,
+site :@tools, :register[LightDark.new], :theme-color<blue>,
     index
         main [
             div :align<center>, [
