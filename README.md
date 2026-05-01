@@ -64,11 +64,6 @@ sudo crontab -e
 */15 * * * * /my_webapp/update-sites.sh >> /var/log/update-sites.log 2>&1
 ```
 
-## Roadmap
-
- - Fractions (boring)
- - Infinity (boring?)
-
 ---
 
 # COPYRIGHT AND LICENSE
