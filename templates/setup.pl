@@ -15,7 +15,7 @@
 #`sudo apt install rakudo -y`;
 `curl https://rakubrew.org/install-on-perl.sh | sh`;
 `eval "$(/home/ubuntu/.rakubrew/bin/rakubrew init Bash)"`;
-`echo 'eval "$(/root/.rakubrew/bin/rakubrew init Bash)" >> ~/.bashrc`;
+`echo 'eval "$(/home/ubuntu/.rakubrew/bin/rakubrew init Bash)" >> ~/.bashrc`;
 `export PATH=/home/ubuntu/.rakubrew/bin/:$PATH`;
 `rakubrew mode shim`;
 `rakubrew download`;

@@ -30,7 +30,9 @@ You will also need a SASS compiler such as Dart.
 
 ## Server Installation
 
-Setup your server with a basic Raku install - for example Ubuntu LTS 24.04 with templates/setup.pl.
+Setup your server with a basic Raku install - for example Ubuntu LTS 24.04 with templates/setup.pl (which assumes user
+`ubuntu`).
+
 A Dart compiler is not needed for the server, provided you have it on your development box.
 
 Make a directory structure like this:
@@ -61,8 +63,9 @@ sudo docker compose up -d
 To have the server poll quay.io for a new image every 15mins (the image is made by GitHub action on commit to main), then adjust the update-sites.sh and go:
 
 ```
-sudo crontab -e
-*/15 * * * * /my_webapp/update-sites.sh >> /var/log/update-sites.log 2>&1
+crontab -e (as root)
+*/14 * * * * echo "$(date '+\%Y-\%m-\%d \%H:\%M:\%S')" >> /var/log/update-sites.log 2>&1
+*/15 * * * * /home/ubuntu/update-sites.sh >> /var/log/update-sites.log 2>&1
 ```
 
 ---
