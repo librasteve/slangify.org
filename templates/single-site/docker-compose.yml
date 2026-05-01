@@ -1,7 +1,7 @@
 services:
   webapp:
-    image: quay.io/librasteve/cragcli-info:latest
-    container_name: cragcli-info
+    image: quay.io/librasteve/slangify-org:latest
+    container_name: slangify-org
     expose:
       - "3000"
     networks:

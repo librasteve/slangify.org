@@ -7,11 +7,11 @@ cmd_container () {
   tag_version="v1-$(date +%Y%m%d)-${GITHUB_RUN_NUMBER}"
 
   echo $QUAY_PASSWORD | docker login quay.io -u $QUAY_USERNAME --password-stdin
-  full_tag="quay.io/librasteve/cragcli-info:${tag_version}"
+  full_tag="quay.io/librasteve/slangify-org:${tag_version}"
   docker build --build-arg quay_expiration="8w" -t $full_tag .
 
   # Also tag as "latest"
-  latest_tag="quay.io/librasteve/cragcli-info:latest"
+  latest_tag="quay.io/librasteve/slangify-org:latest"
   docker tag $full_tag $latest_tag
 
   # Push both tags

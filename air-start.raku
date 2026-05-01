@@ -1,7 +1,7 @@
 #!/usr/bin/env raku
-use Cragcli;
+use Slangify;
 
 sub MAIN( :$host, :$port, :$scss, :$watch ) {
-    $Cragcli::site.start:
+    $Slangify::site.start:
           :$host, :$port, :$scss, :$watch;
 }
