@@ -30,7 +30,8 @@ You will also need a SASS compiler such as Dart.
 
 ## Server Installation
 
-[no dart!]
+Setup your server with a basic Raku install - for example Ubuntu LTS 24.04 with templates/setup.pl.
+A Dart compiler is not needed for the server, provided you have it on your development box.
 
 Make a directory structure like this:
 
@@ -41,7 +42,7 @@ my_webapp/
 └── update-sites.sh
 ```
 
-Populate the files from the template examples given (single-site or multi-site).
+Populate the files from the examples given in templates/ (single-site or multi-site).
 
 Point your domain name(s) to this IP address (ie. match the Caddyfile).
 
