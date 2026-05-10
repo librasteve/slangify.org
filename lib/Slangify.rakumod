@@ -4,6 +4,8 @@ use Air::Functional :BASE;
 use Air::Base;
 use Air::Plugin::Hilite;
 
+my $Playground = external :href<http://187.77.178.93:3001>;
+
 my &index = &page.assuming(
     title       => 'Slangify',
     description => 'slangify.org',
@@ -11,7 +13,7 @@ my &index = &page.assuming(
 
     nav => nav(
         logo    => span( a( :href<https://slangify.org>, :target<_self>, img( :src</img/logo.svg>, :height<40px>, :alt<Slangify> ) ) ),
-        items   => [],
+        items   => [:$Playground],
         widgets => [lightdark],
     ),
 
@@ -182,7 +184,7 @@ site :@tools, :register[LightDark.new, Air::Plugin::Hilite.new], :theme-color<bl
                     grammar Grammar {
                         token TOP {
                             <invoice-line>
-                            [ \n+ <ws> [ <field-line> | <item-line> ] ]*
+                            [ \n+ <.ws> [ <field-line> | <item-line> ] ]*
                             \n*
                         }
                         rule  invoice-line { invoice  <id>                  }
@@ -192,11 +194,11 @@ site :@tools, :register[LightDark.new, Air::Plugin::Hilite.new], :theme-color<bl
                         rule  item-line    { item     <description=quoted>
                                              hours    <hours=number>
                                              rate     <rate=number>         }
+                        token ws { \h* }  #horizontal whitespace only
                         token id     { <[A..Za..z0..9_-]>+       }
                         token date   { \d**4 '-' \d**2 '-' \d**2 }
-                        token quoted { '"' <( <-["]>+ )> '"'     }
                         token number { \d+ [ '.' \d+ ]?          }
-                        token ws { \h* }  #horizontal whitespace only
+                        token quoted { '"' <( <-["]>+ )> '"'     }
                     }
 
 
