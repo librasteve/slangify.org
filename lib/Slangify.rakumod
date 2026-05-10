@@ -181,7 +181,7 @@ site :@tools, :register[LightDark.new, Air::Plugin::Hilite.new], :theme-color<bl
                     hilite q:to/HILITE/;
 
 
-                    #| Raku Grammar parser for the Invoice DSL. (92 loc)
+                    #| Raku Grammar parser for the Invoice DSL. (80 loc)
 
                     use Actionable;
 
@@ -209,6 +209,7 @@ site :@tools, :register[LightDark.new, Air::Plugin::Hilite.new], :theme-color<bl
 
 
 
+
                     class Item does Actionable {
                         has Str  $.description;
                         has Real $.hours;
@@ -229,9 +230,10 @@ site :@tools, :register[LightDark.new, Air::Plugin::Hilite.new], :theme-color<bl
                         method transform(Str $attr, $raw) {
                             $attr eq 'tax-rate' ?? $raw / 100 !! $raw
                         }
-                        method subtotal { [+] @.items.map(*.subtotal) }
+                        method subtotal { @.items.map(*.subtotal).sum }
                         method tax      { $.subtotal * $.tax-rate }
                         method total    { $.subtotal + $.tax }
+                        method label    { "Tax ($.percent)" }
                     }
 
 
@@ -277,9 +279,12 @@ site :@tools, :register[LightDark.new, Air::Plugin::Hilite.new], :theme-color<bl
 
 
 
+
+
                     sub parse(Str $text --> Invoice) {
                         Grammar.parse($text, :actions(Actions.new)).made;
                     }
+
 
                     sub render(Invoice $inv --> Str) {
                         use FStrings;
@@ -290,13 +295,14 @@ site :@tools, :register[LightDark.new, Air::Plugin::Hilite.new], :theme-color<bl
                             "",
                             f('Description' -f 30, 'Hours' +f 6, 'Rate' +f 8, 'Subtotal' +f 10),
                             "-" x 58,
-                            |.items.map({ f(.description -f 30, .hours +f 6.1, .rate +f 8.2, .subtotal +f 10.2) }),
+                            |[{ f( .description -f 30, .hours +f 6.1, .rate +f 8.2, .subtotal +f 10.2) } for .items],
                             "-" x 58,
                             f('Subtotal'  +f 46, .subtotal +f 10.2),
                             f(.label      +f 46, .tax      +f 10.2),
                             f('Total'     +f 46, .total    +f 10.2);
                         } .join("\n");
                     }
+
 
 
 
@@ -313,8 +319,7 @@ site :@tools, :register[LightDark.new, Air::Plugin::Hilite.new], :theme-color<bl
                       tax 8%
                     END
 
-                    my $inv = parse($EXAMPLE);
-                    say render($inv);
+                    say render(parse($EXAMPLE));
 
                     HILITE
 
