@@ -29,6 +29,10 @@ my &index = &page.assuming(
 
 my @tools = [Analytics.new: :provider(Umami), :key<4464d54a-3dbe-4f79-8d45-1ef4f22cd677>,];
 
+my $invoice-dsl-url = q:to/URL/;
+http://187.77.178.93:3001/?g=dG9rZW4lMjBUT1AlMjAlN0IlMEElMjAlMjAlMjAlMjAlM0NpbnZvaWNlLWxpbmUlM0UlMEElMjAlMjAlMjAlMjAlNUIlMjAlNUNuJTJCJTIwJTNDLndzJTNFJTIwJTVCJTIwJTNDZmllbGQtbGluZSUzRSUyMCU3QyUyMCUzQ2l0ZW0tbGluZSUzRSUyMCU1RCUyMCU1RColMEElMjAlMjAlMjAlMjAlNUNuKiUwQSU3RCUwQXJ1bGUlMjAlMjBpbnZvaWNlLWxpbmUlMjAlN0IlMjBpbnZvaWNlJTIwJTIwJTNDaWQlM0UlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlN0QlMEFydWxlJTIwJTIwZmllbGQtbGluZSUyMCUyMCUyMCU3QiUyMCU3QyUyMGRhdGUlMjAlMjAlMjAlM0NkYXRlJTNFJTBBJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTdDJTIwY2xpZW50JTIwJTNDY2xpZW50JTNEcXVvdGVkJTNFJTBBJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTdDJTIwdGF4JTIwJTIwJTIwJTIwJTNDdGF4LXJhdGUlM0RudW1iZXIlM0UlMjAnJTI1JyUyMCU3RCUwQXJ1bGUlMjAlMjBpdGVtLWxpbmUlMjAlMjAlMjAlMjAlN0IlMjBpdGVtJTIwJTIwJTIwJTIwJTIwJTNDZGVzY3JpcHRpb24lM0RxdW90ZWQlM0UlMEElMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjBob3VycyUyMCUyMCUyMCUyMCUzQ2hvdXJzJTNEbnVtYmVyJTNFJTBBJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwcmF0ZSUyMCUyMCUyMCUyMCUyMCUzQ3JhdGUlM0RudW1iZXIlM0UlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlN0QlMEF0b2tlbiUyMHdzJTIwJTIwJTIwJTIwJTIwJTdCJTIwJTVDaColMjAlN0QlMjAlMjAlMjNob3Jpem9udGFsJTIwd2hpdGVzcGFjZSUyMG9ubHklMEF0b2tlbiUyMGlkJTIwJTIwJTIwJTIwJTIwJTdCJTIwJTNDJTVCQS4uWmEuLnowLi45Xy0lNUQlM0UlMkIlMjAlMjAlMjAlMjAlMjAlMjAlMjAlN0QlMEF0b2tlbiUyMGRhdGUlMjAlMjAlMjAlN0IlMjAlNUNkKio0JTIwJy0nJTIwJTVDZCoqMiUyMCctJyUyMCU1Q2QqKjIlMjAlN0QlMEF0b2tlbiUyMG51bWJlciUyMCU3QiUyMCU1Q2QlMkIlMjAlNUIlMjAnLiclMjAlNUNkJTJCJTIwJTVEJTNGJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTdEJTBBdG9rZW4lMjBxdW90ZWQlMjAlN0IlMjAnJTIyJyUyMCUzQyglMjAlM0MtJTVCJTIyJTVEJTNFJTJCJTIwKSUzRSUyMCclMjInJTIwJTIwJTIwJTIwJTIwJTdE&s=aW52b2ljZSUyMElOVi0wMDElMEElMjAlMjBkYXRlJTIwMjAyNi0wNC0yOSUwQSUyMCUyMGNsaWVudCUyMCUyMkFjbWUlMjBDb3JwJTIyJTBBJTBBJTIwJTIwaXRlbSUyMCUyMldlYnNpdGUlMjByZWRlc2lnbiUyMiUyMCUyMGhvdXJzJTIwMTAlMjAlMjByYXRlJTIwMTUwJTBBJTIwJTIwaXRlbSUyMCUyMkhvc3RpbmclMjBzZXR1cCUyMiUyMCUyMCUyMCUyMCUyMGhvdXJzJTIwMiUyMCUyMCUyMHJhdGUlMjAxMDA=
+URL
+
 our $site =
 site :@tools, :register[LightDark.new, Air::Plugin::Hilite.new], :theme-color<blue>,
     index
@@ -36,6 +40,7 @@ site :@tools, :register[LightDark.new, Air::Plugin::Hilite.new], :theme-color<bl
             div :align<center>, [
                 h1 'Slangify';
                 h3 'Compare Python and Raku Invoice DSL code';
+                p 'Open this Raku in the ', a('playground', :href($invoice-dsl-url), :target<_blank>), '.';
                 grid :cols(2), :gap(6), [
                     hilite :lang('python'), q:to/HILITE/;
                     """Python Lark-grammar parser for the invoice DSL. (130 loc)"""
