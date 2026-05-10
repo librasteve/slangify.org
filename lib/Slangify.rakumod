@@ -220,7 +220,6 @@ site :@tools, :register[LightDark.new, Air::Plugin::Hilite.new], :theme-color<bl
 
 
 
-
                     class Invoice does Actionable {
                         has Str  $.id       is rw = "";
                         has Str  $.date     is rw = "";
@@ -234,7 +233,6 @@ site :@tools, :register[LightDark.new, Air::Plugin::Hilite.new], :theme-color<bl
                         method tax      { $.subtotal * $.tax-rate }
                         method total    { $.subtotal + $.tax }
                     }
-
 
 
 
@@ -276,34 +274,32 @@ site :@tools, :register[LightDark.new, Air::Plugin::Hilite.new], :theme-color<bl
 
 
 
+
+
+
                     sub parse(Str $text --> Invoice) {
                         Grammar.parse($text, :actions(Actions.new)).made;
                     }
 
-
-
                     sub render(Invoice $inv --> Str) {
-                        my @lines = (
-                            "Invoice: {$inv.id}",
-                            "Date:    {$inv.date}",
-                            "Client:  {$inv.client}",
+                        use FStrings;
+                        do given $inv {
+                            "Invoice: {.id}",
+                            "Date:    {.date}",
+                            "Client:  {.client}",
                             "",
-                            sprintf("%-30s %6s %8s %10s", "Description", "Hours", "Rate", "Subtotal"),
+                            f('Description' -f 30, 'Hours' +f 6, 'Rate' +f 8, 'Subtotal' +f 10),
                             "-" x 58,
-                        );
-                        for $inv.items {
-                            @lines.append: sprintf("%-30s %6.1f %8.2f %10.2f",
-                                .description, .hours, .rate, .subtotal);
-                        }
-                        my $tax-label = "Tax ({$inv.tax-rate * 100}%)";
-                        @lines.append: [
+                            |.items.map({ f(.description -f 30, .hours +f 6.1, .rate +f 8.2, .subtotal +f 10.2) }),
                             "-" x 58,
-                            sprintf("%46s %10.2f", "Subtotal",  $inv.subtotal),
-                            sprintf("%46s %10.2f", $tax-label,  $inv.tax),
-                            sprintf("%46s %10.2f", "Total",     $inv.total),
-                        ];
-                        @lines.join("\n");
+                            f('Subtotal'  +f 46, .subtotal +f 10.2),
+                            f(.label      +f 46, .tax      +f 10.2),
+                            f('Total'     +f 46, .total    +f 10.2);
+                        } .join("\n");
                     }
+
+
+
 
 
                     my $EXAMPLE = q:to/END/;
