@@ -29,7 +29,7 @@ my &index = &page.assuming(
 
 my @tools = [Analytics.new: :provider(Umami), :key<4464d54a-3dbe-4f79-8d45-1ef4f22cd677>,];
 
-my $invoice-dsl-url = 'http://187.77.178.93:3001/b7c99d042386b4dbdf1dbec49a2cc8033ee71644';
+my $invoice-dsl-url = 'http://187.77.178.93:3001/e501f4dcbb5ec4f43c766a3b33a68b87a2892c49';
 
 our $site =
 site :@tools, :register[LightDark.new, Air::Plugin::Hilite.new], :theme-color<blue>,
@@ -181,7 +181,7 @@ site :@tools, :register[LightDark.new, Air::Plugin::Hilite.new], :theme-color<bl
 
                     #| Raku Grammar parser for the Invoice DSL. (80 loc)
 
-                    use Actionable;
+
 
 
                     grammar Grammar {
@@ -208,31 +208,30 @@ site :@tools, :register[LightDark.new, Air::Plugin::Hilite.new], :theme-color<bl
 
 
 
-                    class Item does Actionable {
-                        has Str  $.description;
-                        has Real $.hours;
-                        has Real $.rate;
-                        method subtotal { $.hours * $.rate }
+                    class Item {
+                        has $.description; has $.hours; has $.rate;
+                        method subtotal { $!hours * $!rate }
                     }
 
 
 
 
 
-                    class Invoice does Actionable {
-                        has Str  $.id       is rw = "";
-                        has Str  $.date     is rw = "";
-                        has Str  $.client   is rw = "";
-                        has Real $.tax-rate is rw = 0.0;
+
+
+                    class Invoice {
+                        has $.id; has $.date; has $.client; has $.tax-rate = 0;
                         has Item @.items;
-                        method transform(Str $attr, $raw) {
-                            $attr eq 'tax-rate' ?? $raw / 100 !! $raw
-                        }
-                        method subtotal { @.items.map(*.subtotal).sum }
-                        method tax      { $.subtotal * $.tax-rate }
+                        method subtotal { @!items.map(*.subtotal).sum }
+                        method tax      { $.subtotal * $!tax-rate }
                         method total    { $.subtotal + $.tax }
-                        method label    { "Tax ($.percent)" }
+                        method label    { "Tax ({($!tax-rate * 100).Int}%)" }
+                        method raku     { render(self) }
                     }
+
+
+
+
 
 
 
@@ -242,11 +241,20 @@ site :@tools, :register[LightDark.new, Air::Plugin::Hilite.new], :theme-color<bl
 
 
                     class Actions {
+                        method info-line($/) {
+                            make $<date>   ?? { date     => ~$<date> }
+                              !! $<client> ?? { client   => ~$<client> }
+                              !!              { tax-rate => (+$<tax-rate>) / 100 }
+                        }
+                        method item-line($/) {
+                            make Item.new(description => ~$<description>,
+                                          hours       => +$<hours>,
+                                          rate        => +$<rate>)
+                        }
                         method TOP($/) {
-                            my $inv = Invoice.action($<head-line>);
-                             { $inv.action($_) } for $<info-line>;
-                             { $inv.items.push(Item.action($_)) } for $<item-line>;
-                            make $inv;
+                            make Invoice.new(    id => ~$<head-line><id>,
+                                 |%($<info-line>.map(*.made)),
+                                 items => $<item-line>.map(*.made).Array);
                         }
                     }
 
@@ -274,33 +282,23 @@ site :@tools, :register[LightDark.new, Air::Plugin::Hilite.new], :theme-color<bl
 
 
 
+                    sub render($inv) {
+                        given $inv {qq:to/RENDER/;
+                            Invoice: .id
+                            Date:    .date
+                            Client:  .client
 
-
-
-
-
-                    sub parse(Str $text --> Invoice) {
-                        Grammar.parse($text, :actions(Actions.new)).made;
+                            { sprintf("%-30s %6s %8s %10s", "Description", "Hours", "Rate", "Subtotal") }
+                            { "-" x 58 }
+                            { .items.map({ sprintf("%-30s %6.1f %8.2f %10.2f",
+                                                  .description, .hours, .rate, .subtotal) }).join("\n") }
+                            { "-" x 58 }
+                            { sprintf("%46s %10.2f", "Subtotal", .subtotal) }
+                            { sprintf("%46s %10.2f", .label,     .tax) }
+                            { sprintf("%46s %10.2f", "Total",    .total) }
+                            RENDER
+                        }
                     }
-
-
-                    sub render(Invoice $inv --> Str) {
-                        use FStrings;
-                        do given $inv {
-                            "Invoice: {.id}",
-                            "Date:    {.date}",
-                            "Client:  {.client}",
-                            "",
-                            f('Description' -f 30, 'Hours' +f 6, 'Rate' +f 8, 'Subtotal' +f 10),
-                            "-" x 58,
-                            |[{ f( .description -f 30, .hours +f 6.1, .rate +f 8.2, .subtotal +f 10.2) } for .items],
-                            "-" x 58,
-                            f('Subtotal'  +f 46, .subtotal +f 10.2),
-                            f(.label      +f 46, .tax      +f 10.2),
-                            f('Total'     +f 46, .total    +f 10.2);
-                        } .join("\n");
-                    }
-
 
 
 
@@ -317,7 +315,8 @@ site :@tools, :register[LightDark.new, Air::Plugin::Hilite.new], :theme-color<bl
                       tax 8%
                     END
 
-                    say render(parse($EXAMPLE));
+
+                    say Grammar.parse($text, :actions(Actions.new)).made;
 
                     HILITE
 
