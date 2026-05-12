@@ -1,0 +1,28 @@
+schema: spec-driven
+
+context: |
+  Tech stack: Raku, Air framework, Cro HTTP, htmx, picocss (blue theme), SCSS.
+
+  Air elements in use:
+  - Air::Functional :BASE — h1, h3, p, div, a, img, span, grid, safe (HTML DSL)
+  - Air::Base — site, page, nav, footer, main, external, Analytics, LightDark
+  - Air::Plugin::Hilite — hilite (syntax highlighting, :lang for non-Raku), LightDark plugin
+
+  Site construction pattern:
+    - `page.assuming(...)` partially applies global page parameters (title, favicon, nav, footer)
+    - `site :@tools :register [...] :theme-color<blue>` wraps all pages
+    - `Analytics.new :provider(Umami) :key<...>` for analytics
+    - `LightDark` registered as both a plugin and a nav widget
+    - `external :href<...>` creates external link objects for nav items
+    - `grid :cols(2) :gap(6)` for two-column layouts
+    - `hilite :lang('python')` for non-Raku code; bare `hilite` defaults to Raku
+    - `safe Q|...|` for raw HTML strings embedded in Air output
+
+  Styling: picocss base with custom SCSS overrides in static/css/styles.scss.
+  Raku syntax highlighting uses rainbow-* CSS classes with CSS custom properties.
+
+  Deployment:
+  - Docker image: quay.io/librasteve/slangify-org:latest
+  - CI/CD: GitHub Actions → scripts/cibuild.sh on push to main
+  - Server: docker-compose + Caddy reverse proxy (multi-site setup)
+  - Port: 3000 (CRO_WEBSITE_HOST/PORT env vars)
