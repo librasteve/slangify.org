@@ -9,3 +9,7 @@ cragcli.info {
 slangify.org {
     reverse_proxy slangify-org:3000
 }
+
+#play.slangify.org {
+#    reverse_proxy grammar-editor:3001
+#}

@@ -26,6 +26,15 @@ services:
       - webnet
     restart: unless-stopped
 
+#  grammar-editor:
+#    image: quay.io/librasteve/grammar-editor:latest
+#    container_name: grammar-editor
+#    expose:
+#      - "3001"
+#    networks:
+#      - webnet
+#    restart: unless-stopped
+
   caddy:
     image: caddy:latest
     container_name: caddy_proxy
@@ -40,6 +49,7 @@ services:
       - harcstack-org
       - cragcli-info
       - slangify-org
+#      - grammar-editor
     networks:
       - webnet
     restart: unless-stopped
