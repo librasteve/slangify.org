@@ -29,7 +29,7 @@ my &index = &page.assuming(
 
 my @tools = [Analytics.new: :provider(Umami), :key<4464d54a-3dbe-4f79-8d45-1ef4f22cd677>,];
 
-my $invoice-dsl-url = 'http://187.77.178.93:3001/e501f4dcbb5ec4f43c766a3b33a68b87a2892c49';
+my $invoice-dsl-url = 'http://187.77.178.93:3001/dafa357e6fd9bb2b6e1741dce94e47789999124a';
 
 our $site =
 site :@tools, :register[LightDark.new, Air::Plugin::Hilite.new], :theme-color<blue>,
