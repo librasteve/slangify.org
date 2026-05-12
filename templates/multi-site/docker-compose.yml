@@ -40,6 +40,7 @@ services:
       - grammar-worker
     networks:
       - webnet
+      - grammar-net
     restart: unless-stopped
 
   grammar-worker:
@@ -51,7 +52,7 @@ services:
     environment:
       GRAMMAR_WORKER_TIMEOUT: "5"
     networks:
-      - webnet
+      - grammar-net
     restart: unless-stopped
 
   caddy:
@@ -80,4 +81,6 @@ volumes:
 
 networks:
   webnet:
+  grammar-net:
+    internal: true
 
