@@ -26,14 +26,33 @@ services:
       - webnet
     restart: unless-stopped
 
-#  grammar-editor:
-#    image: quay.io/librasteve/grammar-editor:latest
-#    container_name: grammar-editor
-#    expose:
-#      - "3001"
-#    networks:
-#      - webnet
-#    restart: unless-stopped
+  grammar-editor:
+    image: quay.io/librasteve/grammar-editor:latest
+    container_name: grammar-editor
+    expose:
+      - "3001"
+    environment:
+      GRAMMAR_WORKER_URL: "http://grammar-worker:9000"
+      GRAMMAR_SNAPSHOTS_DB: "/data/grammar-snapshots.sqlite3"
+    volumes:
+      - grammar-snapshots:/data
+    depends_on:
+      - grammar-worker
+    networks:
+      - webnet
+    restart: unless-stopped
+
+  grammar-worker:
+    image: quay.io/librasteve/grammar-worker:latest
+    container_name: grammar-worker
+    expose:
+      - "9000"
+    mem_limit: 8182m
+    environment:
+      GRAMMAR_WORKER_TIMEOUT: "5"
+    networks:
+      - webnet
+    restart: unless-stopped
 
   caddy:
     image: caddy:latest
@@ -49,7 +68,7 @@ services:
       - harcstack-org
       - cragcli-info
       - slangify-org
-#      - grammar-editor
+      - grammar-editor
     networks:
       - webnet
     restart: unless-stopped
@@ -57,6 +76,7 @@ services:
 volumes:
   caddy_data:
   caddy_config:
+  grammar-snapshots:
 
 networks:
   webnet:
