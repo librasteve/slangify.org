@@ -1,15 +1,15 @@
 harcstack.org {
-    reverse_proxy harcstack-org:3000
+	reverse_proxy harcstack-org:3000
 }
 
 cragcli.info {
-    reverse_proxy cragcli-info:3000
+	reverse_proxy cragcli-info:3000
 }
 
 slangify.org {
-    reverse_proxy slangify-org:3000
+	reverse_proxy slangify-org:3000
 }
 
 play.slangify.org {
-    reverse_proxy grammar-editor:3001
+	reverse_proxy grammar-editor:3001
 }
