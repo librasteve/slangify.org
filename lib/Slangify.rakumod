@@ -4,7 +4,7 @@ use Air::Functional :BASE;
 use Air::Base;
 use Air::Plugin::Hilite;
 
-my $Playground = external :href<https://play.slangify.org/9966a43929a059bd1087a607a11e58f072b6d1a4>;
+my $Playground = external :href<https://play.slangify.org/a7bc4ef274aea9f34b7db8c29669e4d3fa08bd66>;
 
 my &index = &page.assuming(
     title       => 'Slangify',
