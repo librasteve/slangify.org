@@ -54,10 +54,9 @@ services:
     pids_limit: 50
     cap_drop: [ ALL ]
     security_opt: [ no-new-privileges:true ]
-    read_only: true
     tmpfs: [ /tmp, /data ]
     environment:
-      GRAMMAR_WORKER_TIMEOUT: "20"
+      GRAMMAR_WORKER_TIMEOUT: "60"
     networks:
       - grammar-net
     restart: unless-stopped
