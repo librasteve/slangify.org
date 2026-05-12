@@ -48,9 +48,16 @@ services:
     container_name: grammar-worker
     expose:
       - "9000"
-    mem_limit: 8182m
+    mem_limit: 1g
+    memswap_limit: 2g
+    cpus: "1"
+    pids_limit: 50
+    cap_drop: [ ALL ]
+    security_opt: [ no-new-privileges:true ]
+    read_only: true
+    tmpfs: [ /tmp, /data ]
     environment:
-      GRAMMAR_WORKER_TIMEOUT: "5"
+      GRAMMAR_WORKER_TIMEOUT: "20"
     networks:
       - grammar-net
     restart: unless-stopped
