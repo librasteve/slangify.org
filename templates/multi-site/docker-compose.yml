@@ -38,6 +38,10 @@ services:
       - grammar-snapshots:/data
     depends_on:
       - grammar-worker
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
     networks:
       - webnet
       - grammar-net
@@ -48,7 +52,17 @@ services:
     container_name: grammar-worker
     expose:
       - "9000"
-    mem_limit: 8182m
+    mem_limit: 1g
+    memswap_limit: 1g
+    cpus: "0.5"
+    pids_limit: 50
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp
     environment:
       GRAMMAR_WORKER_TIMEOUT: "5"
     networks:
