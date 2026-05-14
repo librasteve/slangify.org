@@ -44,7 +44,7 @@ sub examples-page(&basepage, $shadow, $playground-url) is export {
             div :align<center>, div :style<max-width:80%>, [
                 h1 'Examples';
                 h3 'From a word list to a full invoice DSL — explore Raku grammars live.';
-                p 'Each featured card links to a working playground session. Edit, run, and experiment in your browser. See the ', a('Comparison', :href</comparison>), ' page for a side-by-side with Python.';
+                p 'Each featured card links to a working playground session. Edit, run, and experiment in your browser. See the ', a('Ecosystem', :href</ecosystem>), ' page for many more real-world examples.';
             ];
             spacer;
 
