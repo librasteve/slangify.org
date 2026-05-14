@@ -2,4 +2,8 @@ User-agent: *
 Disallow: /
 Allow: /
 Allow: /comparison
+Allow: /ecosystem
+Allow: /examples
+Allow: /how
+Allow: /where
 Allow: /why

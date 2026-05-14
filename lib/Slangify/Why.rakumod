@@ -6,14 +6,14 @@ use Air::Plugin::Hilite;
 
 my $playground-url = 'https://play.slangify.org';
 
-sub why-page(&basepage, $shadow) is export {
+sub why-page(&basepage, $shadow, $playground-url) is export {
     basepage :stub<why>,
         main [
             $shadow;
-            div :align<center>, [
+            div :align<center>, div :style<width:80%>, [
                 h1 'Why Native Grammars';
                 h3 'Integrated tools. Zero dependencies.';
-                p 'See a full worked example on the ', a('Comparison', :href</comparison>), ' page — we use Python, but the same trade-offs apply to any language without native grammars: Rust, Go, TypeScript, and beyond.';
+                p 'See a full worked example on the ', a('Comparison', :href</comparison>), ' page — we juxtapose Python since it is commonly used for parsing tasks, but similar limitations apply to any language without native grammars: Rust, Go, TypeScript, and beyond.';
             ];
 
             h3 'Built In — Not Bolted On';
@@ -46,19 +46,25 @@ sub why-page(&basepage, $shadow) is export {
             ];
 
             h3 'Named Captures — An Instant Parse Tree';
-            p 'Python regex groups are positional and easy to confuse. Raku grammar tokens give every matched part a name, so the parse tree is self-documenting.';
+            p 'Lark builds a tree, but you still navigate it by position — swap two rules and your indices silently break. Raku grammar tokens give every matched part a name, so the parse tree is self-documenting.';
             grid :cols(2), :gap(6), [
                 hilite :lang('python'), q:to/HILITE/;
-                import re
+                from lark import Lark
 
-                # Which group is the month again?
-                m = re.match(
-                    r"(\d{4})-(\d{2})-(\d{2})",
-                    "2026-05-12"
-                )
-                year  = m.group(1)   # fragile positional index
-                month = m.group(2)
-                day   = m.group(3)
+                GRAMMAR = r"""
+                    start: year "-" month "-" day
+                    year:  /\d{4}/
+                    month: /\d{2}/
+                    day:   /\d{2}/
+                """
+
+                parser = Lark(GRAMMAR)
+                tree = parser.parse("2026-05-12")
+
+                # navigate the tree by child position
+                year  = tree.children[0].children[0]
+                month = tree.children[1].children[0]
+                day   = tree.children[2].children[0]
                 HILITE
 
                 hilite q:to/HILITE/;
