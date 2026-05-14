@@ -8,7 +8,7 @@ sub how-page(&basepage, $shadow, $playground-url) is export {
         main [
             $shadow;
             div :align<center>, div :style<width:80%>, [
-                h1 'How Native Grammars';
+                h1 'How to Try It';
                 h3 'Tools and environments for writing Raku grammars and DSLs.';
                 p 'Here is a reflection of the Raku ', a('tools' , :href<https://raku.org/tools>), '. Since Raku Grammars are built-in, all the regular tools apply and some have Grammar specific features ... just follow the ', a('Install' , :href<https://raku.org/install>), ' guidance to get started.';
             ];
