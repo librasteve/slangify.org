@@ -51,6 +51,7 @@ sub home-page(&basepage, $shadow) is export {
                          - Why define your grammar as a string, separate from your code?
                          - Why number your capture groups?
                          - Why can't you extend a grammar like a class?
+                         - Why treat Unicode text as a special case?
 
                         ### What if ...
 

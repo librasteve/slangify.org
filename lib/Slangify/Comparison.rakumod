@@ -1,4 +1,4 @@
-unit class Slangify::Python;
+unit class Slangify::Comparison;
 
 use Air::Functional :BASE;
 use Air::Base;
@@ -6,12 +6,12 @@ use Air::Plugin::Hilite;
 
 my $invoice-dsl-url = 'https://play.slangify.org/37f6f6c7737081b89358496448069cc11551d5f3';
 
-sub python-page(&basepage, $shadow) is export {
-    basepage :stub<python>,
+sub comparison-page(&basepage, $shadow) is export {
+    basepage :stub<comparison>,
         main [
             $shadow;
             div :align<center>, [
-                h1 'Head to Head Comparison';
+                h1 'Comparison';
                 h3 'Compare Python and Raku Invoice DSL parser code';
                 p 'Open this Raku in the ', a('playground', :href($invoice-dsl-url), :target<_blank>), '.';
                 spacer;

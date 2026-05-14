@@ -6,7 +6,7 @@ use Air::Plugin::Hilite;
 
 use Slangify::Home;
 use Slangify::Why;
-use Slangify::Python;
+use Slangify::Comparison;
 
 my &basepage = &page.assuming(
     title       => 'Slangify',
@@ -36,16 +36,16 @@ my $shadow = background(
 
 my Page $home   = home-page    &basepage, $shadow;
 my Page $why    = why-page     &basepage, $shadow;
-my Page $python = python-page  &basepage, $shadow;
+my Page $comparison = comparison-page  &basepage, $shadow;
 
-my Page @pages = [$home, $why, $python];
+my Page @pages = [$home, $why, $comparison];
 
 my $playground = external :href<https://play.slangify.org/7303f34380d1dae55188eafa3ca54f4677271dc2>;
 
 my Nav $nav =
     nav(
         logo    => span( a( :href<https://slangify.org>, :target<_self>, img( :src</img/logo.svg>, :height<40px>, :alt<Slangify> ) ) ),
-        items   => [:$python, :$why, :$playground],
+        items   => [:$comparison, :$why, :$playground],
 #        widgets => [lightdark],
     );
 

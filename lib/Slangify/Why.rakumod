@@ -11,9 +11,9 @@ sub why-page(&basepage, $shadow) is export {
         main [
             $shadow;
             div :align<center>, [
-                h1 'Why Raku Grammars';
-                h3 'Native grammar support. Zero dependencies.';
-                p 'Try any of these examples live in the ', a('playground', :href($playground-url), :target<_blank>), '.';
+                h1 'Why Native Grammars';
+                h3 'Integrated tools. Zero dependencies.';
+                p 'See a full worked example on the ', a('Comparison', :href</comparison>), ' page — we use Python, but the same trade-offs apply to any language without native grammars: Rust, Go, TypeScript, and beyond.';
             ];
 
             h3 'Built In — Not Bolted On';
@@ -149,6 +149,46 @@ sub why-page(&basepage, $shadow) is export {
 
                 say Extended.parse("hello 42 world");
                 # ｢hello 42 world｣
+                HILITE
+            ];
+
+            h3 'Unicode Properties — Match Any Language Natively';
+            p 'Python\'s Lark uses re terminals by default, which are ASCII-only — handling accented letters or non-Latin scripts needs an extra regex flag and a third-party install. Raku grammars understand Unicode categories natively, and all Raku strings are NFG (Normal Form Grapheme) — every ', code('Str'), ' counts user-perceived characters, so ', code('"é".chars'), ' is ', code('1'), ', not ', code('2'), '. The same grammar parses English, Arabic, Japanese, or emoji without extra dependencies or encoding surprises.';
+            grid :cols(2), :gap(6), [
+                hilite :lang('python'), q:to/HILITE/;
+                from lark import Lark
+
+                # Lark terminals use re by default — ASCII only
+                GRAMMAR = r"""
+                    start: word+
+                    word:  LETTER+
+                    LETTER: /[a-zA-Z]+/   # fails on accented chars
+                """
+                parser = Lark(GRAMMAR)
+                parser.parse("café résumé")  # UnexpectedCharacters
+
+                # Unicode: extra flag + pip install regex
+                GRAMMAR2 = r"""
+                    start: word+
+                    word:  LETTER+
+                    LETTER: /\p{L}+/
+                """
+                parser2 = Lark(GRAMMAR2, regex=True)
+                print(parser2.parse("café résumé"))
+                HILITE
+
+                hilite q:to/HILITE/;
+                grammar NaturalText {
+                    token TOP  { <word>+ % \s+ }
+                    token word { <:Letter>+    }  # any Unicode letter, NFG-aware
+                }
+
+                # all Raku Str are NFG — "é".chars == 1, not 2
+                say NaturalText.parse("café résumé");
+                # ｢café résumé｣
+
+                say NaturalText.parse("日本語 한국어");
+                # ｢日本語 한국어｣
                 HILITE
             ];
         ];
