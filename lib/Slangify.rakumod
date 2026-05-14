@@ -6,6 +6,10 @@ use Air::Plugin::Hilite;
 
 use Slangify::Home;
 use Slangify::Why;
+use Slangify::Where;
+use Slangify::How;
+use Slangify::Ecosystem;
+#use Slangify::Examples;
 use Slangify::Comparison;
 
 my &basepage = &page.assuming(
@@ -20,6 +24,10 @@ my &basepage = &page.assuming(
         Constructed in <a href="https://cro.raku.org" target="_blank">cro</a>.
         &nbsp;&amp;&nbsp;
         Styled by <a href="https://picocss.com" target="_blank">picocss</a>.
+        <br>
+        Raku&reg; is a trademark of The Raku Foundation.
+        <br>
+        &copy; Stephen Roe 2026.
     |),
 );
 
@@ -45,18 +53,22 @@ my $shadow = background(
 
 
 
-my Page $home   = home-page    &basepage, $shadow;
-my Page $why    = why-page     &basepage, $shadow;
-my Page $comparison = comparison-page  &basepage, $shadow;
+my Page $home       = home-page       &basepage, $shadow;
+my Page $why        = why-page        &basepage, $shadow;
+my Page $where      = where-page      &basepage, $shadow;
+my Page $how        = how-page        &basepage, $shadow;
+my Page $ecosystem  = ecosystem-page  &basepage, $shadow;
+#my Page $examples   = examples-page   &basepage, $shadow;
+my Page $comparison = comparison-page &basepage, $shadow;
 
-my Page @pages = [$home, $why, $comparison];
+my Page @pages = [$home, $why, $where, $how, $ecosystem, #`[$examples,] $comparison];
 
 my $playground = external :href<https://play.slangify.org/7303f34380d1dae55188eafa3ca54f4677271dc2>;
 
 my Nav $nav =
     nav(
         logo    => span( a( :href<https://slangify.org>, :target<_self>, img( :src</img/logo.svg>, :height<40px>, :alt<Slangify> ) ) ),
-        items   => [:$comparison, :$why, :$playground],
+        items   => [:$why, :$where, :$how, :$ecosystem, #`[:$examples,] :$playground],
 #        widgets => [lightdark],
     );
 
