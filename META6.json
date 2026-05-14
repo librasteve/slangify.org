@@ -12,7 +12,14 @@
     ],
     "build-depends": [],
     "provides": {
-        "Slangify": "lib/Slangify.rakumod"
+        "Slangify": "lib/Slangify.rakumod",
+        "Slangify::Home": "lib/Slangify/Home.rakumod",
+        "Slangify::Why": "lib/Slangify/Why.rakumod",
+        "Slangify::Where": "lib/Slangify/Where.rakumod",
+        "Slangify::How": "lib/Slangify/How.rakumod",
+        "Slangify::Ecosystem": "lib/Slangify/Ecosystem.rakumod",
+        "Slangify::Examples": "lib/Slangify/Examples.rakumod",
+        "Slangify::Comparison": "lib/Slangify/Comparison.rakumod"
     },
     "license": "Artistic-2.0",
     "source-url": "https://github.com/librasteve/slangify.org.git"
