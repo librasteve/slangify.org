@@ -2,200 +2,96 @@ unit class Slangify::How;
 
 use Air::Functional :BASE;
 use Air::Base;
-use Air::Plugin::Hilite;
 
-my $playground-url = 'https://play.slangify.org';
-
-sub how-page(&basepage, $shadow) is export {
+sub how-page(&basepage, $shadow, $playground-url) is export {
     basepage :stub<how>,
         main [
             $shadow;
             div :align<center>, div :style<width:80%>, [
                 h1 'How Native Grammars';
-                h3 'Integrated tools. Zero dependencies.';
-                p 'See a full worked example on the ', a('Comparison', :href</comparison>), ' page — we juxtapose Python since it is commonly used for parsing tasks, but similar limitations apply to any language without native grammars: Rust, Go, TypeScript, and beyond.';
+                h3 'Tools and environments for writing Raku grammars and DSLs.';
+                p 'Here is a reflection of the Raku ', a('tools' , :href<https://raku.org/tools>), '. Since Raku Grammars are built-in, all the regular tools apply and some have Grammar specific features ... just follow the ', a('Install' , :href<https://raku.org/install>), ' guidance to get started.';
             ];
 
-            h3 'Built In — Not Bolted On';
-            p 'Python needs an external library and a grammar string stored separately from the code. Raku grammars are a first-class language feature — the same syntax you use everywhere.';
-            grid :cols(2), :gap(6), [
-                hilite :lang('python'), q:to/HILITE/;
-                # Python: external library + grammar-as-string
-                from lark import Lark
+            grid :style<width:800px>, :cols(2), :gap(1), [
+                article :style('min-width: 0;'), [
+                    header h3 'Environments';
+                    main markdown q:to/END/;
 
-                GRAMMAR = r"""
-                    start: word+
-                    word:  LETTER+
-                    LETTER: /[a-z]/i
-                """
+                    ### Language Servers
 
-                parser = Lark(GRAMMAR)
-                tree = parser.parse("hello world")
-                HILITE
+                    Editor-agnostic tools for syntax highlighting, autocompletion, etc. Consider using a Language Server over a syntax-highlighting extension for a richer development experience.
 
-                hilite q:to/HILITE/;
-                # Raku: grammar is part of the language
-                grammar WordParser {
-                    token TOP    { <word>+ % \s+ }
-                    token word   { <letter>+     }
-                    token letter { <[a..zA..Z]>  }
-                }
+                     - [Raku Navigator](https://github.com/bscan/RakuNavigator) Raku language support for VS Code, Emacs, neovim and others.
 
-                say WordParser.parse("hello world");
-                HILITE
-            ];
+                    ### Editor Plugins
 
-            h3 'Named Captures — An Instant Parse Tree';
-            p 'Lark builds a tree, but you still navigate it by position — swap two rules and your indices silently break. Raku grammar tokens give every matched part a name, so the parse tree is self-documenting.';
-            grid :cols(2), :gap(6), [
-                hilite :lang('python'), q:to/HILITE/;
-                from lark import Lark
+                    Editor-specific tools, mostly syntax highlighters.
 
-                GRAMMAR = r"""
-                    start: year "-" month "-" day
-                    year:  /\d{4}/
-                    month: /\d{2}/
-                    day:   /\d{2}/
-                """
+                    #### JetBrains IntelliJ
 
-                parser = Lark(GRAMMAR)
-                tree = parser.parse("2026-05-12")
+                     - [Raku IntelliJ Plugin](https://github.com/ab5tract/raku-intellij-plugin) for use with IntelliJ [IDEs](https://www.jetbrains.com/idea/download).
 
-                # navigate the tree by child position
-                year  = tree.children[0].children[0]
-                month = tree.children[1].children[0]
-                day   = tree.children[2].children[0]
-                HILITE
+                    #### Visual Studio Code
 
-                hilite q:to/HILITE/;
-                grammar DateParser {
-                    token TOP   { <year> '-' <month> '-' <day> }
-                    token year  { \d ** 4 }
-                    token month { \d ** 2 }
-                    token day   { \d ** 2 }
-                }
+                     - [Raku Navigator](https://github.com/bscan/RakuNavigator) LSP language server.
 
-                my $m = DateParser.parse("2026-05-12");
-                say $m<year>;   # ｢2026｣  named, not positional
-                say $m<month>;  # ｢05｣
-                say $m<day>;    # ｢12｣
-                HILITE
-            ];
+                    #### Vim
 
-            h3 'Actions Classes — Parsing Separate from Semantics';
-            p 'In Python you mix tree-walking into the transformer class. Raku keeps the grammar (structure) and actions class (meaning) cleanly apart, so each can evolve independently.';
-            grid :cols(2), :gap(6), [
-                hilite :lang('python'), q:to/HILITE/;
-                from lark import Lark, Transformer
+                     - [Raku syntax highlighting](https://github.com/Raku/vim-raku)
 
-                GRAMMAR = r"""
-                    start: left "+" right
-                    left:  /\d+/
-                    right: /\d+/
-                """
+                    #### Emacs
 
-                class CalcActions(Transformer):
-                    def left(self, t):  return int(t[0])
-                    def right(self, t): return int(t[0])
-                    def start(self, t): return t[0] + t[1]
+                     - [raku-mode](https://github.com/Raku/raku-mode), an Emacs major mode for Raku which provides syntax highlighting (and more)
+                     - [Spacemacs](https://github.com/syl20bnr/spacemacs), an Emacs wrapper with vim key-bindings and extra stuff
 
-                parser = Lark(GRAMMAR)
-                print(CalcActions().transform(parser.parse("3+4")))
-                # 7
-                HILITE
+                    #### Nano
 
-                hilite q:to/HILITE/;
-                grammar Calc {                        # structure only
-                    token TOP    { <left> '+' <right> }
-                    token left   { \d+                }
-                    token right  { \d+                }
-                }
+                     - [Raku syntax highlighting](https://github.com/hankache/raku.nanorc)
 
-                class CalcActions {                   # meaning only
-                    method TOP($/)   { make +$<left> + +$<right> }
-                }
+                    #### Geany
 
-                say Calc.parse("3+4", actions => CalcActions.new).made;
-                # OUTPUT: 7
-                HILITE
-            ];
+                     - [Geany](https://www.geany.org) is a popular flyweight Open Source IDE - now supports Raku.
 
-            h3 'Grammar Inheritance — Composable & Extensible';
-            p 'Raku grammars are classes. You can inherit from them and override individual tokens or rules — extend a grammar without touching the original.';
-            grid :cols(2), :gap(6), [
-                hilite :lang('python'), q:to/HILITE/;
-                from lark import Lark
+                    END
+                ];
+                article :style('min-width: 0;'), [
+                    header h3 'Interact & Download';
+                    main markdown q:to/END/;
 
-                # no grammar inheritance — copy-paste or
-                # string manipulation required
-                BASE_GRAMMAR = r"""
-                    start: word+
-                    word:  LETTER+
-                    LETTER: /[a-z]/
-                """
+                    #### Grammar Editor
 
-                EXTENDED = BASE_GRAMMAR + r"""
-                    word: LETTER+ | DIGIT+
-                    DIGIT: /[0-9]/
-                """
+                     - [TUI and web based grammar editor (as featured in "playground")](https://raku.land/zef:FCO/Selkie::UI)
 
-                parser = Lark(EXTENDED)
-                print(parser.parse("hello 42 world"))
-                HILITE
+                    #### Sandboxes
 
-                hilite q:to/HILITE/;
-                grammar Base {
-                    token TOP    { <word>+      }
-                    token word   { <[a..z]>+   }
-                }
+                     - [Raku track on exercism.io](https://exercism.io/tracks/raku)
+                     - [Online Raku compiler (most up to date)](https://repl.it/languages/raku)
+                     - [Online Raku REPL (glot.io)](https://glot.io/new/raku)
+                     - [Online Raku REPL (tio.run)](https://tio.run/#perl6)
+                     - [Online Rakudoc editor](https://pod6.in/)
 
-                grammar Extended is Base {
-                    token word   { <[a..z]>+ | <[0..9]>+ }  # override one token
-                }
+                    #### Notebooks
 
-                say Extended.parse("hello 42 world");
-                # ｢hello 42 world｣
-                HILITE
-            ];
+                     - [Jupyter Chatbook](https://raku.land/zef:antononcube/Jupyter::Chatbook)
+                     - [Jupyter Kernel](https://raku.land/zef:bduggan/Jupyter::Kernel)
+                     - [Jupyter Binder](https://github.com/rcmlz/raku-binder-env)
 
-            h3 'Unicode Properties — Match Any Language Natively';
-            p 'Python\'s Lark uses re terminals by default, which are ASCII-only — handling accented letters or non-Latin scripts needs an extra regex flag and a third-party install. Raku grammars understand Unicode categories natively, and all Raku strings are NFG (Normal Form Grapheme) — every ', code('Str'), ' counts user-perceived characters, so ', code('"é".chars'), ' is ', code('1'), ', not ', code('2'), '. The same grammar parses English, Arabic, Japanese, or emoji without extra dependencies or encoding surprises.';
-            grid :cols(2), :gap(6), [
-                hilite :lang('python'), q:to/HILITE/;
-                from lark import Lark
+                    #### Cheatsheet
 
-                # Lark terminals use re by default — ASCII only
-                GRAMMAR = r"""
-                    start: word+
-                    word:  LETTER+
-                    LETTER: /[a-zA-Z]+/   # fails on accented chars
-                """
-                parser = Lark(GRAMMAR)
-                parser.parse("café résumé")  # UnexpectedCharacters
+                     - [Cheatsheet](https://raw.githubusercontent.com/Raku/mu/master/docs/Perl6/Cheatsheet/cheatsheet.txt)
 
-                # Unicode: extra flag + pip install regex
-                GRAMMAR2 = r"""
-                    start: word+
-                    word:  LETTER+
-                    LETTER: /\p{L}+/
-                """
-                parser2 = Lark(GRAMMAR2, regex=True)
-                print(parser2.parse("café résumé"))
-                HILITE
+                    #### Latest Releases
 
-                hilite q:to/HILITE/;
-                grammar NaturalText {
-                    token TOP  { <word>+ % \s+ }
-                    token word { <:Letter>+    }  # any Unicode letter, NFG-aware
-                }
+                    Check out the latest release versions at [Rakudo News](https://rakudo.org/news).
 
-                # all Raku Str are NFG — "é".chars == 1, not 2
-                say NaturalText.parse("café résumé");
-                # ｢café résumé｣
+                    #### Download Options
 
-                say NaturalText.parse("日本語 한국어");
-                # ｢日本語 한국어｣
-                HILITE
+                    Visit the [install page](https://raku.org/nav/1/install) for the most convenient installation option for Linux, macOS, Windows and Docker.
+
+                    Other download, build and installation options are available at [Rakudo Downloads](https://rakudo.org/downloads).
+                    END
+                ];
             ];
         ];
 }

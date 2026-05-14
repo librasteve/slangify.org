@@ -6,13 +6,13 @@ use Air::Plugin::Hilite;
 
 my $invoice-dsl-url = 'https://play.slangify.org/37f6f6c7737081b89358496448069cc11551d5f3';
 
-sub comparison-page(&basepage, $shadow) is export {
+sub comparison-page(&basepage, $shadow, $playground-url) is export {
     basepage :stub<comparison>,
         main [
             $shadow;
             div :align<center>, [
                 h1 'Comparison';
-                h3 'Compare Python and Raku Invoice DSL parser code';
+                h3 'Side-by-side view of full Python and Raku Invoice DSL parser code';
                 p 'Open this Raku in the ', a('playground', :href($invoice-dsl-url), :target<_blank>), '.';
                 spacer;
                 grid :cols(2), :gap(6), [

@@ -4,9 +4,7 @@ use Air::Functional :BASE;
 use Air::Base;
 use Air::Plugin::Hilite;
 
-my $playground-url = 'https://play.slangify.org';
-
-sub home-page(&basepage, $shadow) is export {
+sub home-page(&basepage, $shadow, $playground-url) is export {
     basepage
         main [
             $shadow;
@@ -37,6 +35,8 @@ sub home-page(&basepage, $shadow) is export {
                         spacer;
 
                         p a('Try it in the playground →', :href($playground-url), :target<_blank>);
+
+                        p em 'DSLs are a secret weapon for LLM effectiveness because their human-readable, domain-centric structure constrains both the training set and model outputs, making them significantly easier for LLMs to generate accurately.'
                     ];
 
                     div [
@@ -51,7 +51,7 @@ sub home-page(&basepage, $shadow) is export {
                          - Why define your grammar as a string, separate from your code?
                          - Why number your capture groups?
                          - Why can't you extend a grammar like a class?
-                         - Why treat Unicode text as a special case?
+                         - Why treat non-ASCII text as a special case?
 
                         ### What if ...
 

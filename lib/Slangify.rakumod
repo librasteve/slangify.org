@@ -12,6 +12,8 @@ use Slangify::Ecosystem;
 use Slangify::Examples;
 use Slangify::Comparison;
 
+constant $playground-url = 'https://play.slangify.org/f33e42bcc7c92c7129424dd1e408df8a24dd1099';
+
 my &basepage = &page.assuming(
     title       => 'Slangify',
     description => 'slangify.org',
@@ -53,23 +55,23 @@ my $shadow = background(
 
 
 
-my Page $home       = home-page       &basepage, $shadow;
-my Page $why        = why-page        &basepage, $shadow;
-my Page $where      = where-page      &basepage, $shadow;
-my Page $how        = how-page        &basepage, $shadow;
-my Page $ecosystem  = ecosystem-page  &basepage, $shadow;
-my Page $examples   = examples-page   &basepage, $shadow;
-my Page $comparison = comparison-page &basepage, $shadow;
+my Page $home       = home-page       &basepage, $shadow, $playground-url;
+my Page $why        = why-page        &basepage, $shadow, $playground-url;
+my Page $where      = where-page      &basepage, $shadow, $playground-url;
+my Page $how        = how-page        &basepage, $shadow, $playground-url;
+my Page $ecosystem  = ecosystem-page  &basepage, $shadow, $playground-url;
+my Page $examples   = examples-page   &basepage, $shadow, $playground-url;
+my Page $comparison = comparison-page &basepage, $shadow, $playground-url;
 
 my Page @pages = [$home, $why, $where, $how, $ecosystem, $examples, $comparison];
 
-my $playground = external :href<https://play.slangify.org/7303f34380d1dae55188eafa3ca54f4677271dc2>;
+my $playground = external :href($playground-url);
+my $docs       = external :href<https://docs.raku.org/language/grammars>;
 
 my Nav $nav =
     nav(
         logo    => span( a( :href<https://slangify.org>, :target<_self>, img( :src</img/logo.svg>, :height<40px>, :alt<Slangify> ) ) ),
-        items   => [:$why, :$where, :$how, :$ecosystem, :$examples, :$playground],
-#        widgets => [lightdark],
+        items   => [:$why, :$where, :$how, :$ecosystem, :$examples, :$docs, :$playground],
     );
 
 { .nav = $nav } for @pages;
