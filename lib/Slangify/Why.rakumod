@@ -6,9 +6,10 @@ use Air::Plugin::Hilite;
 
 my $playground-url = 'https://play.slangify.org';
 
-sub why-page(&basepage) is export {
-    basepage
+sub why-page(&basepage, $shadow) is export {
+    basepage :stub<why>,
         main [
+            $shadow;
             div :align<center>, [
                 h1 'Why Raku Grammars';
                 h3 'Native grammar support. Zero dependencies.';
@@ -79,13 +80,22 @@ sub why-page(&basepage) is export {
             p 'In Python you mix tree-walking into the transformer class. Raku keeps the grammar (structure) and actions class (meaning) cleanly apart, so each can evolve independently.';
             grid :cols(2), :gap(6), [
                 hilite :lang('python'), q:to/HILITE/;
-                from lark import Transformer
+                from lark import Lark, Transformer
 
-                class CalcTransformer(Transformer):
-                    def add(self, items):
-                        return items[0] + items[1]   # interleaved logic
-                    def number(self, items):
-                        return float(items[0])
+                GRAMMAR = r"""
+                    start: left "+" right
+                    left:  /\d+/
+                    right: /\d+/
+                """
+
+                class CalcActions(Transformer):
+                    def left(self, t):  return int(t[0])
+                    def right(self, t): return int(t[0])
+                    def start(self, t): return t[0] + t[1]
+
+                parser = Lark(GRAMMAR)
+                print(CalcActions().transform(parser.parse("3+4")))
+                # 7
                 HILITE
 
                 hilite q:to/HILITE/;
@@ -104,14 +114,17 @@ sub why-page(&basepage) is export {
                 HILITE
             ];
 
-            h3 'Grammar Inheritance — Composable &amp; Extensible';
+            h3 'Grammar Inheritance — Composable & Extensible';
             p 'Raku grammars are classes. You can inherit from them and override individual tokens or rules — extend a grammar without touching the original.';
             grid :cols(2), :gap(6), [
                 hilite :lang('python'), q:to/HILITE/;
-                # Python Lark: no grammar inheritance —
-                # copy-paste or string manipulation required
+                from lark import Lark
+
+                # no grammar inheritance — copy-paste or
+                # string manipulation required
                 BASE_GRAMMAR = r"""
-                    word: LETTER+
+                    start: word+
+                    word:  LETTER+
                     LETTER: /[a-z]/
                 """
 
@@ -119,6 +132,9 @@ sub why-page(&basepage) is export {
                     word: LETTER+ | DIGIT+
                     DIGIT: /[0-9]/
                 """
+
+                parser = Lark(EXTENDED)
+                print(parser.parse("hello 42 world"))
                 HILITE
 
                 hilite q:to/HILITE/;

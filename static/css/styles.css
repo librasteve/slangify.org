@@ -2801,7 +2801,7 @@ article > footer {
 }
 
 b {
-  color: red;
+  color: #3d6b52;
 }
 
 .logo, .logo:hover {
@@ -2823,6 +2823,7 @@ pre, code, kbd {
 
 .hljs {
   background: none !important;
+  padding: 0 !important;
 }
 
 /* Raku code highlighting */
@@ -2854,6 +2855,7 @@ pre, code, kbd {
   max-width: 100%;
   overflow-x: auto;
   /* required to match highlights-js css with raku highlighter css */
+  /* pre.browser-hl { padding: 7px; } */
 }
 .raku-code button.copy-code {
   float: right;
@@ -2874,9 +2876,6 @@ pre, code, kbd {
   height: auto;
   padding-right: 0;
   margin-top: 1rem;
-}
-.raku-code pre.browser-hl {
-  padding: 7px;
 }
 .raku-code .code-name {
   padding-top: 0.75rem;

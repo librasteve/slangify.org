@@ -14,7 +14,8 @@
     "provides": {
         "Slangify": "lib/Slangify.rakumod",
         "Slangify::Home": "lib/Slangify/Home.rakumod",
-        "Slangify::Why": "lib/Slangify/Why.rakumod"
+        "Slangify::Why": "lib/Slangify/Why.rakumod",
+        "Slangify::Python": "lib/Slangify/Python.rakumod"
     },
     "license": "Artistic-2.0",
     "source-url": "https://github.com/librasteve/slangify.org.git"
