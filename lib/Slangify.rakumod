@@ -12,7 +12,7 @@ use Slangify::Ecosystem;
 use Slangify::Examples;
 use Slangify::Comparison;
 
-constant $playground-url = 'https://play.slangify.org/f33e42bcc7c92c7129424dd1e408df8a24dd1099';
+constant $playground-url = 'https://play.slangify.org/6dfde50adbfd8ca6d6396a88c8603e7b9d21c7e0';
 
 my &basepage = &page.assuming(
     title       => 'Slangify',
