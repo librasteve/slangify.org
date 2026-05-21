@@ -1,11 +1,9 @@
 [![License: Artistic-2.0](https://img.shields.io/badge/License-Artistic%202.0-0298c3.svg)](https://opensource.org/licenses/Artistic-2.0)
 [![Build and Test](https://github.com/librasteve/cragcli-info/actions/workflows/ci.yml/badge.svg)](https://github.com/librasteve/cragcli-info/actions/workflows/ci.yml)
 
-# Cragcli
+# slangify.org
 
-Code for the cragcli.info website.
-
-Please visit https://github.com/librasteve/raku-App-Crag (the repo) or https://cragcli.info (the website) for more info...
+Code for the slangify.org website.
 
 ## Local Installation
 
@@ -19,8 +17,8 @@ Red is not currently used by this website.
 You will also need a SASS compiler such as Dart.
 
 ### Git clone this repo
-- `git clone https://github.com/librasteve/cragcli-info.git`
-- `cd Cragcli`
+- `git clone https://github.com/librasteve/slangify.org.git`
+- `cd slangify.org`
 
 ### Run and view it
 - `raku -I. air-serve.raku :scss :watch`
