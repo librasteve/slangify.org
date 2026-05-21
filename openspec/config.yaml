@@ -4,19 +4,29 @@ context: |
   Tech stack: Raku, Air framework, Cro HTTP, htmx, picocss (blue theme), SCSS.
 
   Air elements in use:
-  - Air::Functional :BASE — h1, h3, p, div, a, img, span, grid, safe (HTML DSL)
-  - Air::Base — site, page, nav, footer, main, external, Analytics, LightDark
-  - Air::Plugin::Hilite — hilite (syntax highlighting, :lang for non-Raku), LightDark plugin
+  - Air::Functional :BASE — h1, h2, h3, p, pre, em, div, a, img, span, code, small, strong,
+                            ul, li, article, header, main, grid, safe, spacer, markdown
+  - Air::Base — site, page, nav, footer, external, Analytics, background, Page (type), Nav (type)
+  - Air::Plugin::Hilite — hilite (syntax highlighting, :lang<python> for non-Raku; bare hilite defaults to Raku)
 
   Site construction pattern:
-    - `page.assuming(...)` partially applies global page parameters (title, favicon, nav, footer)
-    - `site :@tools :register [...] :theme-color<blue>` wraps all pages
+    - `page.assuming(...)` partially applies global page parameters (title, favicon, footer)
+    - `basepage :stub<name>` names a page (used in each sub-page constructor)
+    - `site :@tools :register[...] :theme-color<blue> :bold-color<#3d6b52> :@pages :$html404` wraps all pages
     - `Analytics.new :provider(Umami) :key<...>` for analytics
-    - `LightDark` registered as both a plugin and a nav widget
+    - `background(:src<...> :top :left :width :height :size :opacity :filter :translate :rotate)` creates
+      a positioned watermark image — assigned to `$shadow` and passed to every page sub
     - `external :href<...>` creates external link objects for nav items
-    - `grid :cols(2) :gap(6)` for two-column layouts
+    - `nav(logo => ..., items => [...])` builds the nav bar
+    - `{ .nav = $nav } for @pages` assigns nav to all pages after construction
+    - grid variants: `:cols(N)` (equal columns), `:gap(N)`, `:grid-template-columns("1fr 2fr 1fr")`, `:style(...)`
     - `hilite :lang('python')` for non-Raku code; bare `hilite` defaults to Raku
     - `safe Q|...|` for raw HTML strings embedded in Air output
+    - `markdown q:to/MD/; ... MD` renders a heredoc as Markdown
+
+  Page sub signatures:
+    - Regular pages: `sub foo-page(&basepage, $shadow, $playground-url) is export`
+    - 404 page:      `sub html404-page(&basepage, $shadow) is export`
 
   Styling: picocss base with custom SCSS overrides in static/css/styles.scss.
   Raku syntax highlighting uses rainbow-* CSS classes with CSS custom properties.

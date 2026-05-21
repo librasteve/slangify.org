@@ -19,7 +19,8 @@
         "Slangify::How": "lib/Slangify/How.rakumod",
         "Slangify::Ecosystem": "lib/Slangify/Ecosystem.rakumod",
         "Slangify::Examples": "lib/Slangify/Examples.rakumod",
-        "Slangify::Comparison": "lib/Slangify/Comparison.rakumod"
+        "Slangify::Comparison": "lib/Slangify/Comparison.rakumod",
+        "Slangify::HTML404": "lib/Slangify/HTML404.rakumod"
     },
     "license": "Artistic-2.0",
     "source-url": "https://github.com/librasteve/slangify.org.git"
