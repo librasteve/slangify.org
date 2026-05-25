@@ -11,7 +11,7 @@ sub ecosystem-page(&basepage, $shadow, $playground-url) is export {
             div :align<center>, div :style<width:80%>, [
                 h1 'Ecosystem';
                 h3 'A thriving ecosystem of parsers, DSLs, and syntax extensions.';
-                p 'There is a rich landscape of modules that put Grammars to work. They can be found on ', a('raku.land', :href<https://raku.land>), '. Use, collaborate or publish your own. Here is a selection - they fall into three natural families:';
+                p 'There is a rich landscape of modules that put Grammars to work. They can be found on ', a('raku.land', :href<https://raku.land>), '. Use, adapt, extend, collaborate or publish your own. Here is a selection - they fall into three natural families:';
             ];
 
             h3 'Custom Domain-Specific Languages';
@@ -76,7 +76,7 @@ sub ecosystem-page(&basepage, $shadow, $playground-url) is export {
             ];
 
             h3 'Slangs — Grammar Inside the Language Itself';
-            p 'A slang hooks a Grammar and Actions pair into Raku\'s own parser, extending the syntax of the language without any preprocessor or macro system. The ', a('Slangify', :href<https://raku.land/zef:lizmat/Slangify>, :target<_blank>), ' module — this site — manages the lifecycle of all such slangs.';
+            p 'A slang hooks a Grammar and Actions pair into Raku\'s own parser, extending the syntax of the language without any preprocessor or macro system. The ', a('Slangify', :href<https://raku.land/zef:lizmat/Slangify>, :target<_blank>), ' module (which inspired the name of this website) manages the lifecycle of all such slangs.';
             ul [
                 li [ code('Grammar::Debugger'), ' — interactive step-debugger for any Raku grammar' ];
                 li [ code('Physics::Measure'), ' — unit expressions parsed from free text: "miles per hour", "mph", "m.s⁻¹"' ];
