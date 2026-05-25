@@ -7,7 +7,7 @@ use Air::Plugin::Hilite;
 my $date-url       = 'https://play.slangify.org/d6d88ac49414d683d68eee3ddd1d6cce56b6ec63';
 my $calc-url       = 'https://play.slangify.org/673838934ef573f2fcffc9271958291d84169cd4';
 my $contact-url    = 'https://raku.land/zef:librasteve/Contact';
-my $restful-url    = 'https://play.slangify.org/9716936e0e292f537f3be29c258a060057cbea1c';
+my $restful-url    = 'https://play.slangify.org/2fd8d4da3e19b000224ebb4f1b82620f9a28224c';
 my $http-url       = 'https://github.com/ugexe/Raku-Grammar--HTTP';
 my $invoice-url    = 'https://play.slangify.org/266cc36037e8c54f32ebf8da93ba298843ab786f';
 
