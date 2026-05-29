@@ -5,5 +5,6 @@ Allow: /comparison
 Allow: /ecosystem
 Allow: /examples
 Allow: /how
+Allow: /tutorial
 Allow: /where
 Allow: /why

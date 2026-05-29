@@ -11,6 +11,7 @@ use Slangify::How;
 use Slangify::Ecosystem;
 use Slangify::Examples;
 use Slangify::Comparison;
+use Slangify::Tutorial;
 use Slangify::HTML404;
 
 constant $playground-url = 'https://play.slangify.org/6dfde50adbfd8ca6d6396a88c8603e7b9d21c7e0';
@@ -63,9 +64,10 @@ my Page $how        = how-page        &basepage, $shadow, $playground-url;
 my Page $ecosystem  = ecosystem-page  &basepage, $shadow, $playground-url;
 my Page $examples   = examples-page   &basepage, $shadow, $playground-url;
 my Page $comparison = comparison-page &basepage, $shadow, $playground-url;
+my Page $tutorial   = tutorial-page   &basepage, $shadow, $playground-url;
 my Page $html404    = html404-page    &basepage, $shadow;
 
-my Page @pages = [$home, $why, $where, $how, $ecosystem, $examples, $comparison];
+my Page @pages = [$home, $why, $where, $how, $ecosystem, $examples, $comparison, $tutorial];
 
 my $playground = external :href($playground-url);
 my $docs       = external :href<https://docs.raku.org/language/grammars>;
@@ -73,10 +75,10 @@ my $docs       = external :href<https://docs.raku.org/language/grammars>;
 my Nav $nav =
     nav(
         logo    => span( a( :href<https://slangify.org>, :target<_self>, img( :src</img/logo.svg>, :height<40px>, :alt<Slangify> ) ) ),
-        items   => [:$why, :$where, :$how, :$ecosystem, :$examples, :$docs, :$playground],
+        items   => [:$why, :$where, :$how, :$ecosystem, :$examples, :$tutorial, :$docs, :$playground],
     );
 
 { .nav = $nav } for @pages;
 
 our $site =
-    site :@tools, :register[Air::Plugin::Hilite.new], :theme-color<blue>, :bold-color<#3d6b52>, :@pages, :$html404;
+    site :@tools, :register[Air::Plugin::Hilite.new, LeftMenu.new], :theme-color<blue>, :bold-color<#3d6b52>, :@pages, :$html404;
