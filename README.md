@@ -58,7 +58,7 @@ sudo docker compose up -d
 
 ### Auto Restart
 
-To have the server poll quay.io for a new image every 15 mins (the image is made by GitHub action on commit to main), then adjust the update-sites.sh and go:
+To have the server poll quay.io for a new image every 15 minutes (the image is made by GitHub action on commit to main), then adjust the update-sites.sh and go:
 
 ```
 crontab -e (as root)
