@@ -8,7 +8,8 @@
     "auth": "zef:librasteve",
     "depends": [
         "Air",
-        "Air::Plugin::Hilite"
+        "Air::Plugin::Hilite",
+        "Air::Plugin::Rakudoc"
     ],
     "build-depends": [],
     "provides": {
@@ -20,6 +21,7 @@
         "Slangify::Ecosystem": "lib/Slangify/Ecosystem.rakumod",
         "Slangify::Examples": "lib/Slangify/Examples.rakumod",
         "Slangify::Comparison": "lib/Slangify/Comparison.rakumod",
+        "Slangify::Tutorial": "lib/Slangify/Tutorial.rakumod",
         "Slangify::HTML404": "lib/Slangify/HTML404.rakumod"
     },
     "license": "Artistic-2.0",
