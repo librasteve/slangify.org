@@ -2,7 +2,6 @@ unit class Slangify;
 
 use Air::Functional :BASE;
 use Air::Base;
-use Air::Plugin::Hilite;
 
 use Slangify::Home;
 use Slangify::Why;
@@ -45,17 +44,6 @@ my $shadow = background(
     :top<600px>, :left<50%>, :width<1000px>, :height<544px>, :size<contain>,
     :opacity(0.05), :filter('invert(1) blur(1.5px)'), :translate('-50%, -50%'), :rotate(-90),
 );
-
-#| background location steps:
-#|  - set box width and height to actual image dimensions in px (this box is rotated)
-#|  - X dimension - place left of box in center of page left<50%>
-#|                - then translate leftwards by half the box width translate(-50%,xx)
-#|  - Y dimension - set top of box to a fixed point a bit more than half the height for heading
-#|                - then translate upwards by half the box width translate(xx,-50%)
-#|
-#|  - typical result - transform: translate(-50%, -50%) rotate(-90deg);
-
-
 
 my Page $home       = home-page       &basepage, $shadow, $playground-url;
 my Page $why        = why-page        &basepage, $shadow, $playground-url;
