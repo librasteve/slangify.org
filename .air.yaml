@@ -1,0 +1,44 @@
+Html:
+  attrs:
+    lang: "en"
+    data-theme: "dark"
+
+Head:
+  metas:
+    - charset: "utf-8"
+    - name: "viewport"
+      content: "width=device-width, initial-scale=1"
+    - property: "og:type"
+      content: "website"
+    - property: "og:site_name"
+      content: "Slangify"
+    - property: "og:title"
+      content: "Slangify"
+    - property: "og:description"
+      content: "Power up your Domain Specific Language. Build, parse and embed DSLs using Raku Grammars."
+    - property: "og:url"
+      content: "https://slangify.org"
+    - property: "og:image"
+      content: "https://slangify.org/img/logo.svg"
+    - name: "twitter:card"
+      content: "summary"
+    - name: "twitter:title"
+      content: "Slangify"
+    - name: "twitter:description"
+      content: "Power up your Domain Specific Language. Build, parse and embed DSLs using Raku Grammars."
+    - name: "twitter:image"
+      content: "https://slangify.org/img/logo.svg"
+
+  links:
+    - rel: "icon"
+      href: "/img/favicon.ico"
+      type: "image/x-icon"
+    - rel: "stylesheet"
+      href: "/css/styles.css"
+    - rel: "canonical"
+      href: "https://slangify.org"
+
+  scripts:
+    - src: "https://unpkg.com/htmx.org@1.9.5"
+      crossorigin: "anonymous"
+      integrity: "sha384-xcuj3WpfgjlKF+FXhSQFQ0ZNr39ln+hwjN3npfM9VBnUskLolQAcN80McRIVOPuO"
