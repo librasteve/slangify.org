@@ -8,7 +8,7 @@ cmd_container () {
 
   echo $QUAY_PASSWORD | docker login quay.io -u $QUAY_USERNAME --password-stdin
   full_tag="quay.io/librasteve/slangify-org:${tag_version}"
-  docker build --build-arg quay_expiration="8w" -t $full_tag .
+  docker build -t $full_tag .
 
   # Also tag as "latest"
   latest_tag="quay.io/librasteve/slangify-org:latest"

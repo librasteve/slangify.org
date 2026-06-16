@@ -17,7 +17,7 @@ constant $playground-url = 'https://play.slangify.org/6dfde50adbfd8ca6d6396a88c8
 
 my &basepage = &page.assuming(
     title       => 'Slangify',
-    description => 'slangify.org',
+    description => 'Power up your Domain Specific Language. Build, parse and embed DSLs using Raku Grammars.',
     favicon     => '/img/favicon.ico',
 
     footer => footer(
