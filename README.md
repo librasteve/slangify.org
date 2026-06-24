@@ -3,7 +3,7 @@
 
 # slangify.org
 
-Code for the slangify.org website.
+Source code for the slangify.org website. Contributions are most welcome - please make a PR if you can.
 
 ## Local Installation
 
